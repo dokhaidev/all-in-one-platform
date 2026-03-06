@@ -1,65 +1,135 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { Card, Col, Row, Typography } from 'antd';
+import {
+  FileTextOutlined,
+  GiftOutlined,
+  ClockCircleOutlined,
+  SwapOutlined,
+} from '@ant-design/icons';
+import Link from 'next/link';
+
+const { Title, Text } = Typography;
+
+const modules = [
+  {
+    key: 'cv-builder',
+    href: '/cv-builder',
+    icon: <FileTextOutlined style={{ fontSize: 32, color: '#50C878' }} />,
+    title: 'Tạo CV online',
+    description:
+      'Tạo và chỉnh sửa CV online chuyên nghiệp, xuất file PDF ngay tức thì.',
+    status: 'available',
+  },
+  {
+    key: 'lucky-wheel',
+    href: '/lucky-wheel',
+    icon: <GiftOutlined style={{ fontSize: 32, color: '#50C878' }} />,
+    title: 'Vòng quay may mắn',
+    description:
+      'Vòng quay may mắn – thêm phần thưởng, quay ngẫu nhiên, vui vẻ mọi lúc.',
+    status: 'coming-soon',
+  },
+  {
+    key: 'sleep-calculator',
+    href: '/sleep-calculator',
+    icon: <ClockCircleOutlined style={{ fontSize: 32, color: '#50C878' }} />,
+    title: 'Máy tính giấc ngủ',
+    description:
+      'Tính toán giờ ngủ phù hợp để bạn thức dậy tự nhiên, không mệt mỏi.',
+    status: 'coming-soon',
+  },
+  {
+    key: 'currency-converter',
+    href: '/currency-converter',
+    icon: <SwapOutlined style={{ fontSize: 32, color: '#50C878' }} />,
+    title: 'Chuyển đổi tiền tệ',
+    description:
+      'Chuyển đổi tiền tệ với tỷ giá cập nhật liên tục, nhanh chóng và chính xác.',
+    status: 'coming-soon',
+  },
+];
+
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+      {/* Header */}
+      <div style={{ marginBottom: 32 }}>
+        <Title
+          level={2}
+          style={{ color: '#e0e0e0', marginBottom: 8, fontWeight: 700 }}
+        >
+          ToolHub – bảng điều khiển
+        </Title>
+        <Text style={{ color: '#777', fontSize: 15 }}>
+          Chọn công cụ bạn muốn sử dụng
+        </Text>
+      </div>
+
+      {/* Module Grid */}
+      <Row gutter={[20, 20]}>
+        {modules.map((mod) => (
+          <Col key={mod.key} xs={24} sm={12} lg={6}>
+            <Link href={mod.href} style={{ display: 'block' }}>
+              <Card
+                hoverable
+                style={{
+                  background: '#222222',
+                  border: '1px solid #2e2e2e',
+                  borderRadius: 10,
+                  cursor: 'pointer',
+                  transition: 'border-color 0.2s, transform 0.2s',
+                  height: '100%',
+                }}
+                styles={{ body: { padding: 24 } }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.borderColor = '#50C878';
+                  (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.borderColor = '#2e2e2e';
+                  (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
+                }}
+              >
+                <div style={{ marginBottom: 16 }}>{mod.icon}</div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    marginBottom: 8,
+                  }}
+                >
+                  <Text
+                    strong
+                    style={{ color: '#e0e0e0', fontSize: 16 }}
+                  >
+                    {mod.title}
+                  </Text>
+                  {mod.status === 'coming-soon' && (
+                    <span
+                      style={{
+                        fontSize: 10,
+                        color: '#666',
+                        background: '#2a2a2a',
+                        border: '1px solid #333',
+                        borderRadius: 4,
+                        padding: '1px 6px',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Soon
+                    </span>
+                  )}
+                </div>
+                <Text style={{ color: '#888', fontSize: 13, lineHeight: 1.5 }}>
+                  {mod.description}
+                </Text>
+              </Card>
+            </Link>
+          </Col>
+        ))}
+      </Row>
     </div>
   );
 }
