@@ -217,11 +217,17 @@ export default function CvBuilderWizard() {
             {step < STEPS.length - 1 ? (
               <Button
                 type="primary"
-                icon={<RightOutlined />}
-                iconPosition="end"
                 onClick={() => setStep((s) => Math.min(STEPS.length - 1, s + 1))}
               >
-                Tiếp tục
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 8,
+                  }}
+                >
+                  Tiếp tục <RightOutlined />
+                </span>
               </Button>
             ) : (
               <div style={{ width: 96 }} />
