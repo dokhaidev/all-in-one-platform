@@ -81,7 +81,7 @@ export default function HomePage() {
                   transition: 'border-color 0.2s, transform 0.2s',
                   height: '100%',
                 }}
-                styles={{ body: { padding: 24 } }}
+                bodyStyle={{ padding: 24 }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLElement).style.borderColor = '#50C878';
                   (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
