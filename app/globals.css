@@ -9,8 +9,6 @@
 html,
 body {
   height: 100%;
-  background: #1a1a1a;
-  color: #c9c9c9;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
     sans-serif;
   -webkit-font-smoothing: antialiased;

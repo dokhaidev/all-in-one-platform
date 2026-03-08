@@ -3,6 +3,7 @@
 import { Input, Button, Select } from 'antd';
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Language, FLUENCY_LEVELS } from '../../types';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface Props {
   languages: Language[];
@@ -14,6 +15,11 @@ const newLang = (): Language => ({ id: uid(), language: '', fluency: '' });
 const labelStyle: React.CSSProperties = { color: '#888', fontSize: 12, marginBottom: 4 };
 
 export default function StepLanguages({ languages, onChange }: Props) {
+  const { themeMode } = useTheme();
+  const isDark = themeMode === 'dark';
+  const cardBg = isDark ? '#1e1e1e' : '#fafafa';
+  const cardBorder = isDark ? '#2e2e2e' : '#e8e8e8';
+  const emptyColor = isDark ? '#444' : '#bbb';
   const add = () => onChange([...languages, newLang()]);
   const remove = (id: string) => onChange(languages.filter((l) => l.id !== id));
   const update = (id: string, patch: Partial<Language>) =>
@@ -22,7 +28,7 @@ export default function StepLanguages({ languages, onChange }: Props) {
   return (
     <div>
       {languages.length === 0 && (
-        <div style={{ textAlign: 'center', padding: '32px 0', color: '#444', fontSize: 13 }}>
+        <div style={{ textAlign: 'center', padding: '32px 0', color: emptyColor, fontSize: 13 }}>
           Chưa có ngôn ngữ nào
         </div>
       )}
@@ -31,8 +37,8 @@ export default function StepLanguages({ languages, onChange }: Props) {
         <div
           key={lang.id}
           style={{
-            background: '#1e1e1e',
-            border: '1px solid #2e2e2e',
+            background: cardBg,
+            border: `1px solid ${cardBorder}`,
             borderRadius: 8,
             padding: '14px 16px',
             marginBottom: 10,

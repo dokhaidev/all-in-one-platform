@@ -22,6 +22,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (saved === 'light' || saved === 'dark') setThemeModeState(saved);
   }, []);
 
+  useEffect(() => {
+    document.body.style.background = themeMode === 'dark' ? '#1a1a1a' : '#f5f5f5';
+    document.body.style.color = themeMode === 'dark' ? '#c9c9c9' : '#1a1a1a';
+  }, [themeMode]);
+
   const setThemeMode = (t: ThemeMode) => {
     setThemeModeState(t);
     localStorage.setItem('toolhub_theme', t);

@@ -3,6 +3,7 @@
 import { Input, Button, Checkbox } from 'antd';
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import { WorkExperience } from '../../types';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface Props {
   experience: WorkExperience[];
@@ -27,6 +28,12 @@ const labelStyle: React.CSSProperties = { color: '#888', fontSize: 12, marginBot
 const grid2: React.CSSProperties = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 };
 
 export default function StepExperience({ experience, onChange }: Props) {
+  const { themeMode } = useTheme();
+  const isDark = themeMode === 'dark';
+  const cardBg = isDark ? '#1e1e1e' : '#fafafa';
+  const cardBorder = isDark ? '#2e2e2e' : '#e8e8e8';
+  const titleColor = isDark ? '#bbb' : '#333';
+  const emptyColor = isDark ? '#444' : '#bbb';
   const add = () => onChange([...experience, newEntry()]);
   const remove = (id: string) => onChange(experience.filter((e) => e.id !== id));
   const update = (id: string, patch: Partial<WorkExperience>) =>
@@ -56,7 +63,7 @@ export default function StepExperience({ experience, onChange }: Props) {
           style={{
             textAlign: 'center',
             padding: '32px 0',
-            color: '#444',
+            color: emptyColor,
             fontSize: 13,
           }}
         >
@@ -68,8 +75,8 @@ export default function StepExperience({ experience, onChange }: Props) {
         <div
           key={exp.id}
           style={{
-            background: '#1e1e1e',
-            border: '1px solid #2e2e2e',
+            background: cardBg,
+            border: `1px solid ${cardBorder}`,
             borderRadius: 8,
             padding: '16px',
             marginBottom: 12,
@@ -83,7 +90,7 @@ export default function StepExperience({ experience, onChange }: Props) {
               marginBottom: 12,
             }}
           >
-            <div style={{ color: '#bbb', fontSize: 13, fontWeight: 600 }}>
+            <div style={{ color: titleColor, fontSize: 13, fontWeight: 600 }}>
               Vị trí {exIdx + 1}
             </div>
             <Button
@@ -140,7 +147,7 @@ export default function StepExperience({ experience, onChange }: Props) {
               checked={exp.currently}
               onChange={(e) => update(exp.id, { currently: e.target.checked })}
             >
-              <span style={{ color: '#bbb', fontSize: 13 }}>Đang làm hiện tại</span>
+              <span style={{ color: titleColor, fontSize: 13 }}>Đang làm hiện tại</span>
             </Checkbox>
           </div>
 
