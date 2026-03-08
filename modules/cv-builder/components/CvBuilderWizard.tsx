@@ -18,6 +18,7 @@ import {
 
 import { CvData } from '../types';
 import { EMPTY_CV_DATA, SAMPLE_CV_DATA } from '../constants/defaults';
+import { useTheme } from '@/contexts/ThemeContext';
 import CvPreview from './CvPreview';
 import StepDesign from './steps/StepDesign';
 import StepPersonalInfo from './steps/StepPersonalInfo';
@@ -42,6 +43,8 @@ const STEPS = [
 ];
 
 export default function CvBuilderWizard() {
+  const { themeMode } = useTheme();
+  const isDark = themeMode === 'dark';
   const [step, setStep] = useState(0);
   // Initialize with SAMPLE_CV_DATA so preview is always full on first render
   const [cvData, setCvData] = useState<CvData>(SAMPLE_CV_DATA);
@@ -109,9 +112,9 @@ export default function CvBuilderWizard() {
             {STEPS.map((s, i) => {
               const isActive = i === step;
               const isDone = i < step;
-              const color = isActive ? '#50C878' : isDone ? '#50C878' : '#444';
-              const bgColor = isActive ? '#50C878' : isDone ? 'rgba(80,200,120,0.18)' : '#252525';
-              const textColor = isActive ? '#fff' : isDone ? '#50C878' : '#555';
+              const color = isActive ? '#50C878' : isDone ? '#50C878' : (isDark ? '#444' : '#d0d0d0');
+              const bgColor = isActive ? '#50C878' : isDone ? 'rgba(80,200,120,0.18)' : (isDark ? '#252525' : '#f0f0f0');
+              const textColor = isActive ? '#fff' : isDone ? '#50C878' : (isDark ? '#555' : '#aaa');
 
               return (
                 <React.Fragment key={i}>
@@ -141,7 +144,7 @@ export default function CvBuilderWizard() {
                       style={{
                         fontSize: 10,
                         marginTop: 4,
-                        color: isActive ? '#e0e0e0' : '#555',
+                        color: isActive ? '#e0e0e0' : (isDark ? '#555' : '#aaa'),
                         whiteSpace: 'nowrap',
                         fontWeight: isActive ? 600 : 400,
                       }}
@@ -156,7 +159,7 @@ export default function CvBuilderWizard() {
                       style={{
                         flex: 1,
                         height: 2,
-                        background: i < step ? '#50C878' : '#2a2a2a',
+                        background: i < step ? '#50C878' : (isDark ? '#2a2a2a' : '#e8e8e8'),
                         margin: '0 4px',
                         marginBottom: 16,
                         transition: 'background 0.2s',
@@ -176,7 +179,7 @@ export default function CvBuilderWizard() {
               gap: 10,
               marginBottom: 20,
               paddingBottom: 14,
-              borderBottom: '1px solid #2a2a2a',
+              borderBottom: `1px solid ${isDark ? '#2a2a2a' : '#e8e8e8'}`,
             }}
           >
             <span style={{ color: '#50C878', fontSize: 20 }}>{STEPS[step].icon}</span>
@@ -199,7 +202,7 @@ export default function CvBuilderWizard() {
               alignItems: 'center',
               marginTop: 24,
               paddingTop: 16,
-              borderTop: '1px solid #2a2a2a',
+              borderTop: `1px solid ${isDark ? '#2a2a2a' : '#e8e8e8'}`,
             }}
           >
             <Button
@@ -210,7 +213,7 @@ export default function CvBuilderWizard() {
               Quay lại
             </Button>
 
-            <span style={{ color: '#444', fontSize: 12 }}>
+            <span style={{ color: isDark ? '#444' : '#bbb', fontSize: 12 }}>
               {step + 1} / {STEPS.length}
             </span>
 

@@ -3,6 +3,7 @@
 import { Select } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
 import { CvDesign, COLOR_OPTIONS, FONT_OPTIONS, TEMPLATE_OPTIONS } from '../../types';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface Props {
   design: CvDesign;
@@ -10,6 +11,8 @@ interface Props {
 }
 
 export default function StepDesign({ design, onChange }: Props) {
+  const { themeMode } = useTheme();
+  const isDark = themeMode === 'dark';
   const set = (patch: Partial<CvDesign>) => onChange({ ...design, ...patch });
 
   return (
@@ -29,8 +32,8 @@ export default function StepDesign({ design, onChange }: Props) {
                 style={{
                   flex: 1,
                   padding: '16px 12px',
-                  background: active ? 'rgba(80,200,120,0.08)' : '#252525',
-                  border: `2px solid ${active ? '#50C878' : '#333'}`,
+                  background: active ? 'rgba(80,200,120,0.08)' : (isDark ? '#252525' : '#f5f5f5'),
+                  border: `2px solid ${active ? '#50C878' : (isDark ? '#333' : '#e0e0e0')}`,
                   borderRadius: 8,
                   cursor: 'pointer',
                   textAlign: 'center',
@@ -47,7 +50,7 @@ export default function StepDesign({ design, onChange }: Props) {
                 >
                   {t.label}
                 </div>
-                <div style={{ color: '#555', fontSize: 11 }}>{t.desc}</div>
+                <div style={{ color: isDark ? '#555' : '#aaa', fontSize: 11 }}>{t.desc}</div>
               </div>
             );
           })}

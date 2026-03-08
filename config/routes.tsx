@@ -4,6 +4,8 @@ import {
   GiftOutlined,
   ClockCircleOutlined,
   SwapOutlined,
+  DashboardOutlined,
+  FieldTimeOutlined,
 } from '@ant-design/icons';
 
 export interface RouteConfig {
@@ -43,6 +45,18 @@ export const routes: RouteConfig[] = [
     path: '/currency-converter',
     label: 'Chuyển đổi tiền tệ',
     icon: <SwapOutlined />,
+  },
+  {
+    key: '/bmi-calculator',
+    path: '/bmi-calculator',
+    label: 'Máy tính BMI',
+    icon: <DashboardOutlined />,
+  },
+  {
+    key: '/pomodoro-timer',
+    path: '/pomodoro-timer',
+    label: 'Pomodoro Timer',
+    icon: <FieldTimeOutlined />,
   },
 ];
 
