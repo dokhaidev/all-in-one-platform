@@ -1,7 +1,6 @@
 'use client';
 import BmiCalculatorTool from '@/modules/bmi-calculator/components/BmiCalculatorTool';
 import PageHeader from '@/components/layout/PageHeader';
-import { DashboardOutlined } from '@ant-design/icons';
 
 export default function BmiCalculatorPage() {
   return (
@@ -10,7 +9,6 @@ export default function BmiCalculatorPage() {
         title="Máy tính BMI"
         description="Tính chỉ số khối cơ thể (BMI) bằng hệ mét hoặc imperial và nhận lời khuyên cơ bản cho từng nhóm."
         breadcrumbs={[
-          { label: 'Công cụ miễn phí', icon: <DashboardOutlined /> },
           { label: 'Máy tính BMI' },
         ]}
         alert={{ message: 'Toàn bộ phép tính được xử lý ngay trên trình duyệt của bạn. Chúng tôi không tải lên hay lưu trữ dữ liệu.' }}

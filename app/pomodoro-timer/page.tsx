@@ -2,7 +2,6 @@
 
 import PomodoroTimer from '@/modules/pomodoro-timer/components/PomodoroTimer';
 import PageHeader from '@/components/layout/PageHeader';
-import { FieldTimeOutlined } from '@ant-design/icons';
 
 export default function PomodoroTimerPage() {
   return (
@@ -11,7 +10,6 @@ export default function PomodoroTimerPage() {
         title="Pomodoro Timer"
         description="Tập trung và tăng năng suất với kỹ thuật Pomodoro. Bộ đếm thời gian Pomodoro miễn phí giúp bạn làm việc trong các khoảng thời gian tập trung."
         breadcrumbs={[
-          { label: 'Công cụ miễn phí', icon: <FieldTimeOutlined /> },
           { label: 'Pomodoro Timer' },
         ]}
       />
