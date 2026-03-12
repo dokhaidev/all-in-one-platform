@@ -1,41 +1,35 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Layout, Menu, Popover, Avatar } from 'antd';
 import { useRouter, usePathname } from 'next/navigation';
 import {
   DeploymentUnitOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  LogoutOutlined,
-  SettingOutlined,
-  BgColorsOutlined,
   BulbOutlined,
   MoonOutlined,
   SunOutlined,
-  TranslationOutlined,
   UpOutlined,
   DownOutlined,
   CheckOutlined,
 } from '@ant-design/icons';
-import { menuItems } from '@/config/routes';
+import { menuItems, routes, GROUP_TOOLS, GROUP_TEACHER, GROUP_STUDENT, GROUP_CALCULATE, GROUP_DEVTOOLS, GROUP_CODING, GROUP_DEVTOOLS_PRO, GROUP_CSS, GROUP_PRODUCTIVITY, GROUP_GAMES } from '@/config/routes';
 import { useTheme, ThemeMode } from '@/contexts/ThemeContext';
 
-const USER = { name: 'Admin', email: 'admin@gmail.com' };
-
-function UserMenu({ onLogout }: { onLogout: () => void }) {
+function UserMenu() {
   const { themeMode, setThemeMode } = useTheme();
   const [colorModeOpen, setColorModeOpen] = useState(false);
   const isDark = themeMode === 'dark';
 
-  const border = isDark ? '1px solid #2a2a2a' : '1px solid #e8e8e8';
-  const bg = isDark ? '#1e1e1e' : '#ffffff';
+  const border   = isDark ? '1px solid #2a2a2a' : '1px solid #e8e8e8';
+  const bg       = isDark ? '#1e1e1e' : '#ffffff';
   const textColor = isDark ? '#bbb' : '#444';
-  const hoverBg = isDark ? '#2a2a2a' : '#f5f5f5';
-  const subBg = isDark ? '#161616' : '#fafafa';
-  const nameColor = isDark ? '#e0e0e0' : '#1a1a1a';
+  const hoverBg  = isDark ? '#2a2a2a' : '#f5f5f5';
+  const subBg    = isDark ? '#161616' : '#fafafa';
+  const nameColor  = isDark ? '#e0e0e0' : '#1a1a1a';
   const emailColor = isDark ? '#555' : '#999';
-  const iconColor = isDark ? '#666' : '#999';
+  const iconColor  = isDark ? '#666' : '#999';
 
   const menuRow = (
     icon: React.ReactNode,
@@ -50,8 +44,8 @@ function UserMenu({ onLogout }: { onLogout: () => void }) {
         padding: '9px 16px', cursor: 'pointer', color: textColor, fontSize: 13,
         transition: 'background 0.15s',
       }}
-      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = hoverBg; }}
-      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
+      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = hoverBg; }}
+      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         <span style={{ fontSize: 14, color: iconColor }}>{icon}</span>
@@ -62,29 +56,27 @@ function UserMenu({ onLogout }: { onLogout: () => void }) {
   );
 
   return (
-    <div style={{ width: 240, padding: '4px 0', background: bg }}>
+    <div style={{ width: 220, padding: '4px 0', background: bg }}>
       {/* Profile info */}
       <div style={{ padding: '12px 16px 14px', borderBottom: border }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <Avatar size={36} style={{ background: '#50C878', color: '#fff', fontWeight: 700, flexShrink: 0 }}>
-            {USER.name[0]}
-          </Avatar>
+          <Avatar
+            src="/z7613335881697_e36052a81580642946f9b202d2e2dbff.jpg"
+            size={36}
+            style={{ flexShrink: 0, border: '2px solid #50C878' }}
+          />
           <div style={{ minWidth: 0 }}>
-            <div style={{ color: nameColor, fontWeight: 600, fontSize: 13, lineHeight: 1.3 }}>{USER.name}</div>
-            <div style={{ color: emailColor, fontSize: 11, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{USER.email}</div>
+            <div style={{ color: nameColor, fontWeight: 600, fontSize: 13, lineHeight: 1.3 }}>dokhaidev</div>
+            <div style={{ color: emailColor, fontSize: 11 }}>Software Engineer</div>
           </div>
         </div>
       </div>
 
-      {/* Static items */}
-      {menuRow(<SettingOutlined />, 'Cài đặt')}
-      {menuRow(<BgColorsOutlined />, 'Giao diện')}
-
-      {/* Chế độ màu — expandable */}
+      {/* Chế độ màu */}
       {menuRow(
         <BulbOutlined />,
         'Chế độ màu',
-        () => setColorModeOpen((v) => !v),
+        () => setColorModeOpen(v => !v),
         colorModeOpen
           ? <UpOutlined style={{ fontSize: 10, color: iconColor }} />
           : <DownOutlined style={{ fontSize: 10, color: iconColor }} />,
@@ -92,7 +84,7 @@ function UserMenu({ onLogout }: { onLogout: () => void }) {
 
       {colorModeOpen && (
         <div style={{ background: subBg, borderTop: border, borderBottom: border }}>
-          {(['dark', 'light'] as ThemeMode[]).map((mode) => {
+          {(['dark', 'light'] as ThemeMode[]).map(mode => {
             const active = themeMode === mode;
             return (
               <div
@@ -104,8 +96,8 @@ function UserMenu({ onLogout }: { onLogout: () => void }) {
                   color: active ? '#50C878' : textColor,
                   transition: 'background 0.15s',
                 }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = hoverBg; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = hoverBg; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   {mode === 'dark' ? <MoonOutlined /> : <SunOutlined />}
@@ -117,25 +109,6 @@ function UserMenu({ onLogout }: { onLogout: () => void }) {
           })}
         </div>
       )}
-
-      {menuRow(<TranslationOutlined />, 'Ngôn ngữ')}
-
-      {/* Logout */}
-      <div style={{ borderTop: border, marginTop: 4, paddingTop: 4 }}>
-        <div
-          onClick={onLogout}
-          style={{
-            display: 'flex', alignItems: 'center', gap: 10,
-            padding: '9px 16px', cursor: 'pointer', color: textColor, fontSize: 13,
-            transition: 'background 0.15s',
-          }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = hoverBg; (e.currentTarget as HTMLElement).style.color = '#e05555'; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = textColor; }}
-        >
-          <LogoutOutlined style={{ fontSize: 14, color: 'inherit' }} />
-          Đăng xuất
-        </div>
-      </div>
     </div>
   );
 }
@@ -145,49 +118,31 @@ const { Sider, Content } = Layout;
 const SIDEBAR_WIDTH = 290;
 const SIDEBAR_COLLAPSED_WIDTH = 72;
 
+const GROUP_KEYS = new Set([GROUP_TOOLS, GROUP_TEACHER, GROUP_STUDENT, GROUP_CALCULATE, GROUP_DEVTOOLS, GROUP_CODING, GROUP_DEVTOOLS_PRO, GROUP_CSS, GROUP_PRODUCTIVITY, GROUP_GAMES]);
+
+function getInitialOpenKeys(pathname: string): string[] {
+  const route = routes.find(r => r.key === pathname);
+  return route?.groupKey ? [route.groupKey] : [];
+}
+
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
-  const [authed, setAuthed] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const { themeMode } = useTheme();
   const isDark = themeMode === 'dark';
   const router = useRouter();
   const pathname = usePathname();
+  const [openKeys, setOpenKeys] = useState<string[]>(() => getInitialOpenKeys(pathname));
 
-  const siderBg = isDark ? '#141414' : '#ffffff';
-  const siderBorder = isDark ? '#242424' : '#e8e8e8';
-  const contentBg = isDark ? '#1a1a1a' : '#f5f5f5';
-  const brandColor = isDark ? '#e0e0e0' : '#1a1a1a';
-  const collapseIconColor = isDark ? '#666' : '#aaa';
+  const siderBg       = isDark ? '#141414' : '#ffffff';
+  const siderBorder   = isDark ? '#242424' : '#e8e8e8';
+  const contentBg     = isDark ? '#1a1a1a' : '#f5f5f5';
+  const brandColor    = isDark ? '#e0e0e0' : '#1a1a1a';
+  const collapseColor = isDark ? '#666' : '#aaa';
 
-  const isLoginPage = pathname === '/login';
-
-  useEffect(() => {
-    if (isLoginPage) return;
-    const auth = localStorage.getItem('toolhub_auth');
-    if (!auth) {
-      router.push('/login');
-    } else {
-      setAuthed(true);
-    }
-  }, [isLoginPage, router]);
-
-  const handleLogout = () => {
-    localStorage.removeItem('toolhub_auth');
-    router.push('/login');
+  const handleMenuClick = ({ key }: { key: string }) => {
+    if (!GROUP_KEYS.has(key)) router.push(key);
   };
-
-  // Login page — render without sidebar
-  if (isLoginPage) {
-    return <>{children}</>;
-  }
-
-  // Blank screen while checking auth
-  if (!authed) {
-    return <div style={{ minHeight: '100vh', background: contentBg }} />;
-  }
-
-  const selectedKey = menuItems.find((item) => item.key === pathname)?.key ?? '/';
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -211,69 +166,59 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         }}
       >
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-          {/* Brand / Logo */}
+          {/* Brand */}
           <div
             style={{
-              height: 56,
-              flexShrink: 0,
-              display: 'flex',
-              alignItems: 'center',
+              height: 56, flexShrink: 0,
+              display: 'flex', alignItems: 'center',
               justifyContent: collapsed ? 'center' : 'space-between',
               padding: '0 20px',
               borderBottom: `1px solid ${siderBorder}`,
-              cursor: 'pointer',
-              userSelect: 'none',
+              cursor: 'pointer', userSelect: 'none',
             }}
             onClick={() => setCollapsed(!collapsed)}
           >
             {!collapsed && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <DeploymentUnitOutlined style={{ color: '#50C878', fontSize: 20 }} />
-                <span
-                  style={{
-                    color: brandColor,
-                    fontSize: 16,
-                    fontWeight: 700,
-                    letterSpacing: '0.02em',
-                  }}
-                >
+                <span style={{ color: brandColor, fontSize: 16, fontWeight: 700, letterSpacing: '0.02em' }}>
                   dokhaidev
                 </span>
               </div>
             )}
-            {collapsed ? (
-              <MenuUnfoldOutlined style={{ color: collapseIconColor, fontSize: 16 }} />
-            ) : (
-              <MenuFoldOutlined style={{ color: collapseIconColor, fontSize: 14 }} />
-            )}
+            {collapsed
+              ? <MenuUnfoldOutlined style={{ color: collapseColor, fontSize: 16 }} />
+              : <MenuFoldOutlined   style={{ color: collapseColor, fontSize: 14 }} />
+            }
           </div>
 
-          {/* Navigation Menu */}
+          {/* Navigation */}
           <div style={{ flex: 1, overflowY: 'auto' }}>
             <Menu
               theme={isDark ? 'dark' : 'light'}
               mode="inline"
-              selectedKeys={[selectedKey]}
+              selectedKeys={[pathname]}
+              openKeys={openKeys}
+              onOpenChange={setOpenKeys}
               items={menuItems}
-              onClick={({ key }) => router.push(key)}
-              style={{
-                background: siderBg,
-                border: 'none',
-                marginTop: 8,
-                fontSize: 14,
-              }}
+              onClick={handleMenuClick}
+              style={{ background: siderBg, border: 'none', marginTop: 8, fontSize: 14 }}
             />
           </div>
 
-          {/* User Profile */}
+          {/* User / Profile */}
           <Popover
             open={profileOpen}
             onOpenChange={setProfileOpen}
-            content={<UserMenu onLogout={() => { setProfileOpen(false); handleLogout(); }} />}
+            content={<UserMenu />}
             trigger="click"
             placement="top"
             arrow={false}
-            overlayInnerStyle={{ background: isDark ? '#1e1e1e' : '#ffffff', border: `1px solid ${siderBorder}`, borderRadius: 10, padding: 0, overflow: 'hidden' }}
+            overlayInnerStyle={{
+              background: isDark ? '#1e1e1e' : '#ffffff',
+              border: `1px solid ${siderBorder}`,
+              borderRadius: 10, padding: 0, overflow: 'hidden',
+            }}
             overlayStyle={{ paddingBottom: 8 }}
           >
             <div
@@ -281,34 +226,33 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 flexShrink: 0,
                 borderTop: `1px solid ${siderBorder}`,
                 padding: collapsed ? '12px 0' : '10px 16px',
-                display: 'flex',
-                alignItems: 'center',
+                display: 'flex', alignItems: 'center',
                 justifyContent: collapsed ? 'center' : 'space-between',
-                gap: 10,
-                cursor: 'pointer',
-                transition: 'background 0.15s',
+                gap: 10, cursor: 'pointer', transition: 'background 0.15s',
               }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = isDark ? '#1e1e1e' : '#f5f5f5'; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = isDark ? '#1e1e1e' : '#f5f5f5'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
-                <Avatar size={32} style={{ background: '#50C878', color: '#fff', fontWeight: 700, flexShrink: 0, fontSize: 13 }}>
-                  {USER.name[0]}
-                </Avatar>
+                <Avatar
+                  src="/z7613335881697_e36052a81580642946f9b202d2e2dbff.jpg"
+                  size={32}
+                  style={{ flexShrink: 0, border: '2px solid #50C878' }}
+                />
                 {!collapsed && (
                   <div style={{ minWidth: 0 }}>
                     <div style={{ color: brandColor, fontSize: 13, fontWeight: 600, lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {USER.name}
+                      dokhaidev
                     </div>
-                    <div style={{ color: collapseIconColor, fontSize: 11, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {USER.email}
+                    <div style={{ color: collapseColor, fontSize: 11, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      Software Engineer
                     </div>
                   </div>
                 )}
               </div>
               {!collapsed && (
                 profileOpen
-                  ? <UpOutlined style={{ fontSize: 10, color: '#555', flexShrink: 0 }} />
+                  ? <UpOutlined   style={{ fontSize: 10, color: '#555', flexShrink: 0 }} />
                   : <DownOutlined style={{ fontSize: 10, color: '#555', flexShrink: 0 }} />
               )}
             </div>
@@ -317,21 +261,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       </Sider>
 
       {/* Main Content */}
-      <Layout
-        style={{
-          marginInlineStart: collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH,
-          transition: 'margin-inline-start 0.2s ease',
-          background: contentBg,
-          minHeight: '100vh',
-        }}
-      >
-        <Content
-          style={{
-            padding: '32px 48px',
-            minHeight: '100vh',
-            background: contentBg,
-          }}
-        >
+      <Layout style={{
+        marginInlineStart: collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH,
+        transition: 'margin-inline-start 0.2s ease',
+        background: contentBg,
+        minHeight: '100vh',
+      }}>
+        <Content style={{ padding: '32px 48px', minHeight: '100vh', background: contentBg }}>
           {children}
         </Content>
       </Layout>
